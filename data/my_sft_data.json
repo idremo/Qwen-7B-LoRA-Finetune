@@ -1,0 +1,62 @@
+[
+  {
+    "conversations": [
+      {
+        "from": "user",
+        "value": "解释什么是LoRA微调，为什么它能降低显存占用"
+      },
+      {
+        "from": "assistant",
+        "value": "LoRA是低秩适配的缩写，核心是在大模型注意力层插入低秩矩阵，冻结基座模型所有参数，仅训练这些低秩矩阵。可训练参数占比仅0.4%左右，因此大幅降低显存占用和训练成本。"
+      }
+    ]
+  },
+  {
+    "conversations": [
+      {
+        "from": "user",
+        "value": "LoRA的r参数和alpha参数分别有什么作用，如何选择"
+      },
+      {
+        "from": "assistant",
+        "value": "r是低秩矩阵的秩，决定低秩空间的维度，r越大效果越好但显存占用越高；alpha是缩放因子，通常设为r的4倍（如r=8则alpha=32），用于平衡低秩矩阵的更新幅度。实际应用中r=8是平衡效果和显存的最优值。"
+      }
+    ]
+  }, 
+  {
+    "conversations": [
+      {
+        "from": "user",
+        "value": "国产大模型Qwen和百川的LoRA微调有什么差异"
+      },
+      {
+        "from": "assistant",
+        "value": "主要差异在target_modules参数：Qwen的注意力层参数名是c_attn，百川是W_pack，这是因为两者的注意力层实现结构不同，微调时需对应修改目标模块才能生效。"
+      }
+    ]
+  },
+  {
+    "conversations": [
+      {
+        "from": "user",
+        "value": "QLoRA和LoRA的区别是什么"
+      },
+      {
+        "from": "assistant",
+        "value": "QLoRA是在LoRA基础上增加了4bit/8bit量化，加载基座模型时直接量化为低精度，进一步降低显存占用，单卡12GB即可训练7B模型，效果和LoRA接近。"
+      }
+    ]
+  },
+  {
+    "conversations": [
+      {
+        "from": "user",
+        "value": "大模型微调时，为什么优先微调注意力层而非前馈层"
+      },
+      {
+        "from": "assistant",
+        "value": "注意力层是大模型理解语义、捕捉上下文关联的核心，微调注意力层能快速让模型适配指令任务；前馈层主要负责特征变换，微调收益低，且会增加显存占用。"
+      }
+    ]
+  }
+]
